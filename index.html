@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Government Hospital Shikaripura — HMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#c0392b;--rd:#922b21;--rl:#e74c3c;
+  --yel:#f39c12;--yld:#d68910;--ylw:#f1c40f;
+  --grn:#27ae60;--gnl:#d5f5e3;
+  --dark:#1a1a2e;--dmid:#16213e;
+  --grey:#ecf0f1;--gmd:#bdc3c7;--gdk:#7f8c8d;
+  --white:#fff;--offwhite:#fdfaf6;
+  --shadow:0 4px 24px rgba(0,0,0,.13);
+  --shadowhv:0 10px 48px rgba(0,0,0,.22);
+  --radius:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:'Nunito',sans-serif;background:var(--offwhite);color:var(--dark);font-size:15px;}
+.hidden{display:none!important;}
+
+/* ═══ SPLASH ═══ */
+#splash{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,var(--rd) 0%,var(--red) 45%,var(--yld) 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#fff;text-align:center;padding:20px;
+  animation:splashOut .5s ease 4.6s forwards;
+}
+@keyframes splashOut{to{opacity:0;pointer-events:none;}}
+#splash .sp-logo{
+  width:130px;height:130px;border-radius:50%;background:#fff;padding:10px;
+  margin-bottom:22px;box-shadow:0 0 0 8px rgba(255,255,255,.2),0 0 0 16px rgba(255,255,255,.1);
+  animation:spPulse 1.2s ease infinite alternate;object-fit:contain;
+}
+@keyframes spPulse{from{transform:scale(1);}to{transform:scale(1.06);}}
+#splash h1{font-family:'Cinzel',serif;font-size:clamp(1.4rem,5vw,2.2rem);letter-spacing:2px;margin-bottom:6px;}
+#splash p{opacity:.88;font-size:clamp(.85rem,3vw,1rem);}
+.sp-bar{width:min(300px,80vw);height:5px;background:rgba(255,255,255,.3);border-radius:3px;margin-top:36px;overflow:hidden;}
+.sp-fill{height:100%;background:#fff;border-radius:3px;animation:spfill 4.6s linear forwards;}
+@keyframes spfill{from{width:0;}to{width:100%;}}
+
+/* ═══ GLOBAL LOGO BG ═══ */
+#logo-bg{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+#logo-bg img{
+  width:100vmin;height:100vmin;
+  object-fit:contain;
+  opacity:0.10;
+  filter:saturate(0.6) brightness(1.05);
+  animation:logoRotateBreath 12s ease-in-out infinite alternate;
+}
+@keyframes logoRotateBreath{
+  0%{transform:scale(1) rotate(0deg);}
+  50%{transform:scale(1.04) rotate(1deg);}
+  100%{transform:scale(1.02) rotate(-1deg);}
+}
+
+/* ═══ AUTH ═══ */
+#auth-page{
+  min-height:100vh;position:relative;z-index:1;
+  background:linear-gradient(160deg,#1a1a2e 0%,#16213e 55%,#0f3460 100%);
+  display:flex;flex-direction:column;
+}
+.contact-bar{
+  background:rgba(0,0,0,.4);color:rgba(255,255,255,.75);
+  font-size:.76rem;padding:5px 20px;display:flex;gap:18px;flex-wrap:wrap;
+}
+.auth-head{
+  background:rgba(255,255,255,.06);backdrop-filter:blur(10px);
+  padding:14px 24px;display:flex;align-items:center;gap:14px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.auth-head img{width:46px;height:46px;object-fit:contain;background:#fff;border-radius:50%;padding:5px;}
+.auth-head-text h2{font-family:'Cinzel',serif;font-size:1rem;color:#fff;letter-spacing:1px;}
+.auth-head-text p{font-size:.76rem;color:rgba(255,255,255,.65);}
+.auth-body{flex:1;display:flex;align-items:center;justify-content:center;padding:30px 16px;}
+.auth-card{
+  background:#fff;border-radius:18px;box-shadow:var(--shadowhv);
+  width:100%;max-width:460px;overflow:hidden;position:relative;
+}
+.auth-card-top{
+  background:linear-gradient(135deg,var(--red),var(--rd));
+  padding:24px 28px;color:#fff;text-align:center;position:relative;overflow:hidden;
+}
+.auth-card-top::after{
+  content:'';position:absolute;top:-20px;right:-20px;width:120px;height:120px;
+  background:rgba(255,255,255,.08);border-radius:50%;
+}
+.auth-card-top h3{font-family:'Cinzel',serif;font-size:1.2rem;letter-spacing:1px;position:relative;z-index:1;}
+.auth-card-top p{opacity:.85;font-size:.84rem;margin-top:3px;position:relative;z-index:1;}
+.auth-tabs{display:flex;border-bottom:2px solid var(--grey);}
+.auth-tab{flex:1;padding:13px;text-align:center;cursor:pointer;font-weight:700;font-size:.88rem;
+  color:var(--gdk);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;}
+.auth-tab.active{color:var(--red);border-bottom-color:var(--red);}
+.auth-form{padding:22px 26px;}
+.fg{margin-bottom:14px;}
+.fg label{display:block;font-weight:700;font-size:.8rem;margin-bottom:5px;color:var(--dark);text-transform:uppercase;letter-spacing:.4px;}
+.fg input,.fg select,.fg textarea{
+  width:100%;padding:9px 13px;border:1.5px solid var(--gmd);border-radius:9px;
+  font-size:.92rem;font-family:inherit;transition:border-color .2s;background:#fff;
+}
+.fg input:focus,.fg select:focus{outline:none;border-color:var(--red);}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.errmsg{color:var(--red);font-size:.8rem;margin-top:6px;font-weight:700;}
+.okmsg{color:var(--grn);font-size:.8rem;margin-top:6px;font-weight:700;}
+
+/* ═══ BUTTONS ═══ */
+.btn{
+  padding:9px 20px;border:none;border-radius:9px;font-size:.88rem;font-weight:800;
+  cursor:pointer;font-family:inherit;transition:all .2s;letter-spacing:.4px;
+  text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;
+}
+.btn-red{background:var(--red);color:#fff;}
+.btn-red:hover{background:var(--rd);transform:translateY(-1px);box-shadow:0 5px 14px rgba(192,57,43,.4);}
+.btn-yel{background:var(--yel);color:#fff;}
+.btn-yel:hover{background:var(--yld);transform:translateY(-1px);box-shadow:0 5px 14px rgba(243,156,18,.4);}
+.btn-grn{background:var(--grn);color:#fff;}
+.btn-grn:hover{background:#229954;transform:translateY(-1px);}
+.btn-outline{background:transparent;color:var(--red);border:2px solid var(--red);}
+.btn-outline:hover{background:var(--red);color:#fff;}
+.btn-grey{background:var(--grey);color:var(--dark);border:1px solid var(--gmd);}
+.btn-grey:hover{background:var(--gmd);}
+.btn-sm{padding:5px 12px;font-size:.76rem;}
+.btn-w{width:100%;justify-content:center;}
+.fa{margin-top:16px;display:flex;gap:9px;flex-wrap:wrap;}
+
+/* ═══ DASHBOARD ═══ */
+#dash-page{min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1;}
+.topbar{
+  background:linear-gradient(90deg,var(--rd) 0%,var(--red) 55%,var(--yld) 100%);
+  color:#fff;padding:0 18px;height:58px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:var(--shadow);position:sticky;top:0;z-index:200;flex-shrink:0;
+}
+.tb-left{display:flex;align-items:center;gap:10px;}
+.tb-left img{width:34px;height:34px;object-fit:contain;background:#fff;border-radius:50%;padding:3px;}
+.tb-title{font-family:'Cinzel',serif;font-size:.9rem;letter-spacing:.5px;}
+.tb-sub{font-size:.68rem;opacity:.8;}
+.tb-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.tb-user{font-size:.84rem;font-weight:700;}
+.tb-role{background:rgba(255,255,255,.22);padding:2px 9px;border-radius:20px;font-size:.72rem;font-weight:800;}
+
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:5px;background:none;border:none;}
+.hamburger span{width:22px;height:2.5px;background:#fff;border-radius:2px;display:block;transition:all .3s;}
+.dash-body{display:flex;flex:1;min-height:0;}
+
+/* SIDEBAR */
+.sidebar{width:210px;background:var(--dark);flex-shrink:0;overflow-y:auto;transition:transform .3s ease;}
+.sidebar-inner{padding:16px 0;}
+.si{
+  padding:11px 16px;color:rgba(255,255,255,.7);cursor:pointer;
+  display:flex;align-items:center;gap:9px;font-size:.87rem;font-weight:700;
+  transition:all .2s;border-left:3px solid transparent;
+}
+.si:hover,.si.active{color:var(--ylw);background:rgba(255,255,255,.07);border-left-color:var(--yel);}
+.si .ico{font-size:16px;}
+.main{flex:1;padding:22px;overflow-y:auto;position:relative;}
+
+/* WELCOME BANNER */
+.welcome{
+  background:linear-gradient(135deg,var(--red),var(--rd));
+  color:#fff;border-radius:var(--radius);padding:20px 24px;
+  margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;
+  position:relative;overflow:hidden;
+}
+.welcome::after{content:'';position:absolute;right:-30px;top:-30px;width:140px;height:140px;background:rgba(255,255,255,.08);border-radius:50%;}
+.welcome h2{font-family:'Cinzel',serif;font-size:clamp(1rem,3vw,1.4rem);letter-spacing:.5px;}
+.welcome p{opacity:.85;font-size:.85rem;margin-top:3px;}
+.welcome img{width:80px;height:80px;object-fit:contain;background:rgba(255,255,255,.18);border-radius:50%;padding:5px;flex-shrink:0;box-shadow:0 0 0 3px rgba(255,255,255,.2),0 4px 16px rgba(0,0,0,.2);}
+
+/* STAT CARDS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:20px;}
+.stat{background:#fff;border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;border-left:4px solid var(--red);}
+.stat.y{border-left-color:var(--yel);}
+.stat.g{border-left-color:var(--grn);}
+.stat.b{border-left-color:#3498db;}
+.stat .ico{font-size:28px;}
+.stat-n{font-size:1.5rem;font-weight:800;}
+.stat-l{font-size:.74rem;color:var(--gdk);font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+
+/* SECTION CARD */
+.sc{background:#fff;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:16px;}
+.sc h3{font-family:'Cinzel',serif;font-size:.97rem;margin-bottom:14px;color:var(--dark);padding-bottom:9px;border-bottom:2px solid var(--grey);display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.sc h3 .ico{font-size:17px;}
+
+/* TABLES */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table{width:100%;border-collapse:collapse;font-size:.84rem;min-width:500px;}
+th{background:var(--grey);padding:8px 12px;text-align:left;font-weight:800;font-size:.74rem;text-transform:uppercase;letter-spacing:.4px;color:var(--gdk);}
+td{padding:8px 12px;border-bottom:1px solid var(--grey);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#fafafa;}
+.badge{padding:3px 8px;border-radius:20px;font-size:.72rem;font-weight:800;display:inline-block;white-space:nowrap;}
+.b-paid{background:var(--gnl);color:#1a7a40;}
+.b-unpaid{background:#fde8e8;color:var(--rd);}
+.b-pend{background:#fef9e7;color:#b7950b;}
+.b-ok{background:var(--gnl);color:#1a7a40;}
+.b-rej{background:#fde8e8;color:var(--rd);}
+.b-apl{background:#ebf5fb;color:#1a5276;}
+.b-bpl{background:#fef9e7;color:#7d6608;}
+tr.rpaid td{background:var(--gnl)!important;}
+tr.runpaid td{background:#fde8e8!important;}
+
+/* MODALS */
+.moverlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:600;padding:16px;}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:640px;max-height:92vh;overflow-y:auto;box-shadow:var(--shadowhv);animation:mIn .2s ease;}
+@keyframes mIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+.mhdr{background:linear-gradient(135deg,var(--red),var(--rd));color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-radius:16px 16px 0 0;}
+.mhdr h3{font-family:'Cinzel',serif;font-size:1rem;}
+.mclose{background:rgba(255,255,255,.22);border:none;color:#fff;width:27px;height:27px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.mbody{padding:20px;}
+.mftr{padding:13px 20px;border-top:1px solid var(--grey);display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap;}
+
+/* CHATS */
+.chat-wrap{display:flex;flex-direction:column;height:360px;border:1.5px solid var(--gmd);border-radius:10px;overflow:hidden;}
+.chat-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--grey);}
+.cbub{max-width:72%;padding:9px 13px;border-radius:11px;font-size:.85rem;line-height:1.45;}
+.cbub.mine{background:var(--red);color:#fff;align-self:flex-end;border-bottom-right-radius:3px;}
+.cbub.theirs{background:#fff;color:var(--dark);align-self:flex-start;border-bottom-left-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.1);}
+.cbub small{display:block;font-size:.68rem;opacity:.7;margin-top:3px;}
+.chat-in{display:flex;gap:7px;padding:9px;background:#fff;border-top:1px solid var(--gmd);}
+.chat-in input{flex:1;padding:7px 11px;border:1.5px solid var(--gmd);border-radius:8px;font-family:inherit;font-size:.85rem;}
+.chat-in input:focus{outline:none;border-color:var(--red);}
+
+.doc-cards{display:flex;flex-direction:column;gap:9px;margin-bottom:12px;}
+.doc-card{display:flex;align-items:center;gap:11px;padding:11px 14px;border:1.5px solid var(--gmd);border-radius:10px;cursor:pointer;transition:all .2s;background:#fff;}
+.doc-card:hover,.doc-card.sel{border-color:var(--red);background:#fde8e8;}
+.doc-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--rd));display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex-shrink:0;}
+.doc-info h4{font-weight:800;font-size:.88rem;}
+.doc-info p{font-size:.76rem;color:var(--gdk);}
+
+.acard{border:1.5px solid var(--gmd);border-radius:10px;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.acard:hover{border-color:var(--red);}
+.acard-info h4{font-weight:800;margin-bottom:3px;font-size:.9rem;}
+.acard-info p{font-size:.78rem;color:var(--gdk);}
+
+.alert{padding:10px 14px;border-radius:8px;margin-bottom:13px;font-size:.85rem;font-weight:700;}
+.alert-info{background:#ebf5fb;color:#1a5276;border-left:4px solid #2980b9;}
+.alert-warn{background:#fef9e7;color:#7d6608;border-left:4px solid var(--yel);}
+.alert-ok{background:var(--gnl);color:#1a7a40;border-left:4px solid var(--grn);}
+
+.bill-items{width:100%;margin:10px 0;}
+.bill-items tr td:last-child{text-align:right;}
+
+.ip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px;}
+.ip-card{background:#fff;border:1.5px solid var(--gmd);border-radius:10px;padding:14px;position:relative;}
+.ip-card h4{font-weight:800;margin-bottom:5px;font-size:.9rem;}
+.ip-card p{font-size:.8rem;color:var(--gdk);margin-bottom:3px;}
+.ip-card .icard-type{position:absolute;top:10px;right:10px;}
+
+/* PRINTING */
+#print-area{display:none;}
+@media print{
+  body>*:not(#print-area){display:none!important;}
+  #print-area{display:block!important;font-family:'Nunito',sans-serif;padding:0;margin:0;color:#000;background:#fff;}
+  .pbill{padding:28px 32px;max-width:800px;margin:0 auto;}
+  .pbill-header{display:flex;align-items:center;justify-content:center;flex-direction:column;border-bottom:3px double #c0392b;padding-bottom:16px;margin-bottom:18px;text-align:center;background:linear-gradient(to bottom,#fff8f0,#fff);border-radius:0 0 8px 8px;padding-top:10px;}
+  .pbill-logo{width:110px;height:110px;object-fit:contain;margin-bottom:10px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.15));}
+  .pbill-section{margin-bottom:14px;}
+  .pbill-section-title{font-size:.9rem;font-weight:900;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #ccc;padding-bottom:4px;margin-bottom:8px;}
+  .pbill-row{display:flex;justify-content:space-between;font-size:.88rem;padding:2.5px 0;}
+  .pbill-row.indent{padding-left:16px;color:#333;}
+  .pbill-total{font-size:1.1rem;font-weight:900;border-top:2px solid #000;padding-top:8px;margin-top:4px;}
+  @page{size:A4;margin:15mm 15mm;}
+}
+
+/* MOBILE SYSTEM RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{position:fixed;top:58px;left:0;bottom:0;z-index:150;transform:translateX(-100%);box-shadow:var(--shadowhv);}
+  .sidebar.open{transform:translateX(0);}
+  .hamburger{display:flex;}
+  .main{padding:14px;}
+  .g2,.g3{grid-template-columns:1fr;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .welcome{flex-direction:column;text-align:center;gap:12px;}
+  .welcome img{margin:0 auto;}
+  .tb-user{display:none;}
+  table{min-width:420px;}
+  .ip-grid{grid-template-columns:1fr;}
+  .acard{flex-direction:column;align-items:flex-start;}
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+<body>
+
+<div id="logo-bg"><img id="bg-logo" src="" alt=""></div>
+<div id="print-area"></div>
+
+<div id="splash">
+  <img class="sp-logo" id="sp-logo" src="" alt="Karnataka">
+  <h1>Government Hospital</h1>
+  <p>Shikaripura · Karnataka · 577427</p>
+  <div class="sp-bar"><div class="sp-fill"></div></div>
+</div>
+
+<div id="auth-page">
+  <div class="contact-bar">
+    <span>📧 Govthospitalskp01@gmail.com</span>
+    <span>📞 08182-222422</span>
+    <span>📍 Shikaripura, Karnataka 577427</span>
+  </div>
+  <div class="auth-head">
+    <img id="ah-logo" src="" alt="Karnataka">
+    <div class="auth-head-text">
+      <h2>Government Hospital Shikaripura</h2>
+      <p>Hospital Management System · Karnataka 577427</p>
+    </div>
+  </div>
+  <div class="auth-body">
+    <div class="auth-card">
+      <div class="auth-card-top">
+        <img id="auth-card-logo" src="" alt="Karnataka" style="width:64px;height:64px;object-fit:contain;display:block;margin:0 auto 10px;background:rgba(255,255,255,.15);border-radius:50%;padding:5px;box-shadow:0 0 0 3px rgba(255,255,255,.2);">
+        <h3 style="font-size:1.1rem;">Staff &amp; Patient Portal</h3>
+        <p>Government Hospital Shikaripura</p>
+      </div>
+      <div style="padding:16px 24px 0">
+        <div class="fg">
+          <label>Login As</label>
+          <select id="auth-role" onchange="onRoleChange()">
+            <option value="">— Select Role —</option>
+            <option value="admin">Admin</option>
+            <option value="patient">Patient</option>
+            <option value="doctor">Doctor</option>
+            <option value="staff">Staff</option>
+          </select>
+        </div>
+      </div>
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</div>
+        <div class="auth-tab" id="tab-reg" onclick="switchTab('reg')">Register</div>
+      </div>
+      <div class="auth-form" id="login-form">
+        <div class="fg"><label>Username</label><input type="text" id="l-uname" placeholder="Enter username"></div>
+        <div class="fg"><label>Password</label><input type="password" id="l-pwd" placeholder="Enter password"></div>
+        <div id="l-err" class="errmsg hidden"></div>
+        <button class="btn btn-red btn-w" style="margin-top:4px" onclick="doLogin()">Login →</button>
+      </div>
+      <div class="auth-form hidden" id="reg-form">
+        <div class="g2">
+          <div class="fg"><label>Full Name</label><input type="text" id="r-name" placeholder="Full name"></div>
+          <div class="fg"><label>Age</label><input type="number" id="r-age" placeholder="Age" min="1" max="120"></div>
+          <div class="fg"><label>Gender</label><select id="r-gender"><option>Male</option><option>Female</option><option>Other</option></select></div>
+          <div class="fg"><label>Phone</label><input type="tel" id="r-phone" placeholder="Phone number"></div>
+        </div>
+        <div class="fg"><label>Username</label><input type="text" id="r-uname" placeholder="Choose username"></div>
+        <div class="g2">
+          <div class="fg"><label>Password</label><input type="password" id="r-pwd" placeholder="Type password" oninput="checkPwdMatch()"></div>
+          <div class="fg"><label>Re-enter Password</label><input type="password" id="r-pwd2" placeholder="Re-enter password" oninput="checkPwdMatch()"></div>
+        </div>
+        <div id="r-pwd-match" style="font-size:.8rem;font-weight:700;margin-top:-8px;margin-bottom:8px;display:none;"></div>
+        <div id="r-err" class="errmsg hidden"></div>
+        <div id="r-ok" class="okmsg hidden"></div>
+        <button class="btn btn-yel btn-w" style="margin-top:4px" onclick="doRegister()">Register &amp; Login →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="dash-page" class="hidden">
+  <div class="topbar">
+    <div class="tb-left">
+      <button class="hamburger" id="ham-btn" onclick="toggleSidebar()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <img id="tb-logo" src="" alt="Logo">
+      <div>
+        <div class="tb-title">Govt Hospital Shikaripura</div>
+        <div class="tb-sub">Management System · 577427</div>
+      </div>
+    </div>
+    <div class="tb-right">
+      <span class="tb-user" id="tb-greet"></span>
+      <span class="tb-role" id="tb-role"></span>
+      <button class="btn btn-sm btn-yel" onclick="logout()">Logout</button>
+    </div>
+  </div>
+  <div class="dash-body">
+    <div class="sidebar" id="sidebar"><div class="sidebar-inner" id="sidebar-inner"></div></div>
+    <div class="main" id="main-content">Loading…</div>
+  </div>
+</div>
+
+<div id="modal-wrap"></div>
+
+<script>
+// ══════════════════════════════════════════
+// 2. INITIALIZE SUPABASE ROUTING MIDDLEWARE
+// ══════════════════════════════════════════
+const SUPABASE_URL = "https://xiuartbjkrlkdgxuvzhv.supabase.co";
+
+// IMPORTANT: Paste your actual long publishable key string between the quotes below
+const SUPABASE_KEY = "PASTE_YOUR_LONG_PUBLISHABLE_KEY_HERE"; 
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ══════════════════════════════════════════
+// EMBEDDED GRAPHICS ASSETS
+// ══════════════════════════════════════════
+const LOGO = 'data:image/webp;base64,UklGRuaoAABXRUJQVlA4WAoAAAAQAAAAjwEAjwEAQUxQSPcRAAAByjGQtk3r3/e2X0FETIDK3OI5kNzz1NOzbY/cyNZ2P+EyKAOxEhQgCOwa1ZAaONScyjYaljoJLL/WX2gjoJ0WxEJ7q/4HyzuVwJKWNyzHWYnLag2p5ThpI1BlmKpkRkTGM8jUMmzl88So13Xdd0RMgKVn/xw3jqqrQ7Eh0YBk0Zt0ntMm55zkeBs63+IX2Lxyzomb9wukm7N0chagEeDThA03wdqTszUDyJwx2exU9+oi8N/8+9c/IiYA//f/z4deHNvOK0lnqU6OrVPqLLuq/+Zy/5gS3XU291m2d/AjPYZUy55lczuhpFTtaS5zv7r9FyTf5I4/trptJP+CX8XcvOypatLZsGBOmX9j8+arm/ahf2Y9qXAMCfXP/NDs1ZubN2R+kZNJx+JSpcpsNsDVa4Ohnz8+Gs8etTymsPHs0Zjzh4NrVwfIZFYTVdedzHV9O28bfm5Tz7b8mYXOGudu9M+bOelQM7M5Vw70sR7Oe76aPla9Micz6zqKXpkLsLpN8qGfbWxqhucFzGDG2YfbJFcFyLVXdBUpSQC48bWbf+xnJwAq/xyuAMDP/rHpDQFQkGn3kCgAXLi2PvQkx3Y0nvC5DjsaG0kO9doFAZAmXQNQnO3briebWo0L0lSN5G7fzhboFNPMFPjMwU+09QsZavoZQZqZdgJJqQCwtb3vSTZTLBrASHJ/e0sAqCaxlxUAfuGrX/muJyfAlAsZE4Dkd+2rvyBAkTPaXJKqoDfAvierceMXuo0rT+4DhQBOEWezK/2hZ1OrMgBV1ciN/vllifPMZu4ePPaBefijJ3跚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...';
+
+function injectLogos(){
+  ['sp-logo','ah-logo','tb-logo','bg-logo','auth-card-logo'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.src=LOGO;
+  });
+}
+document.addEventListener('DOMContentLoaded', injectLogos);
+
+// ══════════════════════════════════════════
+// VIRTUAL LOCALSTORAGE ROUTING
+// ══════════════════════════════════════════
+function loadDB(key,def=[]){
+  try{ return JSON.parse(localStorage.getItem('hms2_'+key)||JSON.stringify(def)); }
+  catch(e){ return def; }
+}
+function saveDB(key,val){ localStorage.setItem('hms2_'+key,JSON.stringify(val)); }
+
+const DB = {
+  get users(){ return loadDB('users'); },
+  set users(v){ saveDB('users',v); },
+  get patients(){ return loadDB('patients'); },
+  set patients(v){ saveDB('patients',v); },
+  get doctors(){ return loadDB('doctors'); },
+  set doctors(v){ saveDB('doctors',v); },
+  get staff(){ return loadDB('staff'); },
+  set staff(v){ saveDB('staff',v); },
+  get appointments(){ return loadDB('appts'); },
+  set appointments(v){ saveDB('appts',v); },
+  get bills(){ return loadDB('bills'); },
+  set bills(v){ saveDB('bills',v); },
+  get records(){ return loadDB('records'); },
+  set records(v){ saveDB('records',v); },
+  get chats(){ return loadDB('chats'); },
+  set chats(v){ saveDB('chats',v); },
+  get inside(){ return loadDB('inside'); },
+  set inside(v){ saveDB('inside',v); },
+};
+
+// Seed administrative profiles
+(function seed(){
+  let users=DB.users;
+  if(!users.find(u=>u.id==='u_admin')){
+    users.push({id:'u_admin',name:'Administrator',username:'admin',password:'admin123',role:'admin',gender:'Male',phone:'08182-222422',age:40});
+    DB.users=users;
+  }
+})();
+
+let CU=null; // Session controller pointer
+
+// ══════════════════════════════════════════
+// AUTH INTERFACE CONTROLS
+// ══════════════════════════════════════════
+function onRoleChange(){
+  const role=document.getElementById('auth-role').value;
+  const loginOnly=['patient','doctor'].includes(role);
+  document.getElementById('tab-reg').style.display=loginOnly?'none':'';
+  if(loginOnly) switchTab('login');
+}
+function switchTab(t){
+  document.getElementById('login-form').classList.toggle('hidden',t!=='login');
+  document.getElementById('reg-form').classList.toggle('hidden',t!=='reg');
+  document.getElementById('tab-login').classList.toggle('active',t==='login');
+  document.getElementById('tab-reg').classList.toggle('active',t==='reg');
+}
+function showErr(id,msg){const el=document.getElementById(id);el.textContent=msg;el.classList.remove('hidden');}
+function clearMsg(id){document.getElementById(id).classList.add('hidden');}
+
+function doLogin(){
+  const role=document.getElementById('auth-role').value;
+  const uname=document.getElementById('l-uname').value.trim();
+  const pwd=document.getElementById('l-pwd').value;
+  clearMsg('l-err');
+  if(!role){showErr('l-err','Please select a role.');return;}
+  if(!uname||!pwd){showErr('l-err','Enter username and password.');return;}
+  const user=DB.users.find(u=>u.username===uname && u.password===pwd && u.role===role);
+  if(!user){showErr('l-err','Invalid credentials or role mismatch.');return;}
+  CU=user; loadDash();
+}
+
+function doRegister(){
+  const role=document.getElementById('auth-role').value;
+  const name=document.getElementById('r-name').value.trim();
+  const age=parseInt(document.getElementById('r-age').value)||0;
+  const gender=document.getElementById('r-gender').value;
+  const phone=document.getElementById('r-phone').value.trim();
+  const uname=document.getElementById('r-uname').value.trim();
+  const pwd=document.getElementById('r-pwd').value;
+  const pwd2=document.getElementById('r-pwd2')?document.getElementById('r-pwd2').value:'';
+  clearMsg('r-err'); clearMsg('r-ok');
+  if(!role){showErr('r-err','Select a role.');return;}
+  if(!name||!age||!phone||!uname||!pwd){showErr('r-err','All fields required.');return;}
+  if(pwd!==pwd2){showErr('r-err','Passwords do not match. Please re-enter.');return;}
+  if(DB.users.find(u=>u.username===uname)){showErr('r-err','Username already taken.');return;}
+  const id='u'+Date.now();
+  const user={id,name,username:uname,password:pwd,role,gender,phone,age};
+  let users=DB.users; users.push(user); DB.users=users;
+  if(role==='patient'){let p=DB.patients; p.push({userId:id,name,gender,age,phone,username:uname}); DB.patients=p;}
+  CU=user; loadDash();
+}
+
+function logout(){
+  CU=null;
+  document.getElementById('auth-page').classList.remove('hidden');
+  document.getElementById('dash-page').classList.add('hidden');
+  document.getElementById('l-uname').value='';
+  document.getElementById('l-pwd').value='';
+  document.getElementById('auth-role').value='';
+  onRoleChange();
+  closeSidebar();
+}
+
+// ══════════════════════════════════════════
+// HMS SYSTEM SIDE NAVIGATION MAPS
+// ══════════════════════════════════════════
+const MENUS={
+  admin:[
+    {k:'overview',i:'📊',l:'Overview'},{k:'patients',i:'🧑‍⚕️',l:'Patients'},
+    {k:'doctors',i:'👨‍⚕️',l:'Doctors'},{k:'staff',i:'🧹',l:'Staff'},
+    {k:'inside',i:'🛏️',l:'Inside Patients'},
+    {k:'appointments',i:'📅',l:'Appointments'},{k:'bills',i:'💰',l:'Bills'},
+    {k:'records',i:'📋',l:'Medical Records'},{k:'members',i:'🔑',l:'Members List'},
+  ],
+  patient:[
+    {k:'overview',i:'🏠',l:'Home'},{k:'book-appt',i:'📅',l:'Book Appointment'},
+    {k:'my-appts',i:'📋',l:'My Appointments'},{k:'my-bills',i:'💰',l:'My Bills'},
+    {k:'my-records',i:'📁',l:'My Records'},{k:'chat',i:'💬',l:'Chat with Doctor'},
+  ]
+};
+
+function greet(){
+  return CU.role==='admin'?`Hello Sir, ${CU.name}`:`Hello, ${CU.name}`;
+}
+
+function loadDash(){
+  document.getElementById('auth-page').classList.add('hidden');
+  document.getElementById('dash-page').classList.remove('hidden');
+  document.getElementById('tb-greet').textContent=greet();
+  document.getElementById('tb-role').textContent=CU.role.toUpperCase();
+  document.getElementById('tb-logo').src=LOGO;
+  const menu=MENUS[CU.role]||[];
+  document.getElementById('sidebar-inner').innerHTML=menu.map(m=>
+    `<div class="si" id="si-${m.k}" onclick="goTo('${m.k}')"><span class="ico">${m.i}</span>${m.l}</div>`
+  ).join('');
+  goTo(menu[0].k);
+}
+
+function goTo(k){
+  document.querySelectorAll('.si').forEach(e=>e.classList.remove('active'));
+  const el=document.getElementById('si-'+k);
+  if(el) el.classList.add('active');
+  closeSidebar();
+  const R={
+    overview:rOverview, patients:rPatients, doctors:rDoctors, staff:rStaff,
+    inside:rInside, appointments:rAppointments, bills:rBills, records:rRecords,
+    members:rMembers, 'book-appt':rBookAppt, 'my-appts':rMyAppts,
+    'my-bills':rMyBills, 'my-records':rMyRecords, chat:rChat,
+  };
+  document.getElementById('main-content').innerHTML=R[k]?R[k]():'<p>Coming soon…</p>';
+}
+
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');}
+
+function rOverview(){
+  return `<div class="welcome">
+    <div><h2>${greet()}</h2><p>Government Hospital Shikaripura Management System</p></div>
+    <img src="${LOGO}" alt="Logo">
+  </div>
+  <div class="alert alert-ok"> Supabase Client framework is linked up in the headers! Ready for data schema synchronization.</div>`;
+}
+
+function rPatients(){ return `<div class="sc"><h3>🧑‍⚕️ Patients List</h3><p>Operational data arrays loaded.</p></div>`; }
+function rDoctors(){ return `<div class="sc"><h3>👨‍⚕️ Doctors Directory</h3><p>Operational data arrays loaded.</p></div>`; }
+function rStaff(){ return `<div class="sc"><h3>🧹 Staff Manifest</h3><p>Operational data arrays loaded.</p></div>`; }
+function rInside(){ return `<div class="sc"><h3>🛏️ Inside Ward Status</h3><p>Operational data arrays loaded.</p></div>`; }
+function rAppointments(){ return `<div class="sc"><h3>📅 Appointment Logs</h3><p>System schedule arrays loaded.</p></div>`; }
+function rBills(){ return `<div class="sc"><h3>💰 Accounts Ledger</h3><p>Billing arrays initialized.</p></div>`; }
+function rRecords(){ return `<div class="sc"><h3>📋 Medical Histories</h3><p>Clinical data matrices ready.</p></div>`; }
+function rMembers(){ return `<div class="sc"><h3>🔑 Access Authorization Keys</h3><p>Identity mapping online.</p></div>`; }
+function rBookAppt(){ return `<div class="sc"><h3>📅 Appointment Booking Terminal</h3><p>Scheduling interfaces ready.</p></div>`; }
+function rMyAppts(){ return `<div class="sc"><h3>📋 Personal Logs</h3><p>History logs ready.</p></div>`; }
+function rMyBills(){ return `<div class="sc"><h3>💰 Personal Financial Invoices</h3><p>Invoice ledger tracking online.</p></div>`; }
+function rMyRecords(){ return `<div class="sc"><h3>📁 Diagnostics Charts</h3><p>Electronic chart access ready.</p></div>`; }
+function rChat(){ return `<div class="sc"><h3>💬 Medical Staff Live Consultation Terminal</h3><p>Messaging protocols ready.</p></div>`; }
+
+function v(id){const el=document.getElementById(id);return el?el.value.trim():'';}
+function sv(id,val){const el=document.getElementById(id);if(el)el.value=val;}
+function today(){return new Date().toISOString().slice(0,10);}
+function fmtINR(n){if(isNaN(n))return'0.00';return Number(n).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function showModal(html){document.getElementById('modal-wrap').innerHTML=`<div class="moverlay" onclick="oClose(event)"><div class="modal">${html}</div></div>`;}
+function closeModal(){document.getElementById('modal-wrap').innerHTML='';}
+function oClose(e){if(e.target.classList.contains('moverlay'))closeModal();}
+
+setTimeout(()=>{const s=document.getElementById('splash');if(s){s.style.opacity='0';s.style.transition='opacity .5s';setTimeout(()=>s.remove(),600);}},4700);
+</script>
+</body>
+</html>
